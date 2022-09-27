@@ -3,6 +3,8 @@ package calculator_test;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -65,6 +67,8 @@ public class Calculator extends JFrame {
 			
 			buttons[i].setBorderPainted(false); //테두리 없애기
 			
+			
+			
 		}
 		
 		
@@ -81,6 +85,38 @@ public class Calculator extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //창 종료 시 프로그램도 종료
 	}
 	
+	abstract //버튼에 액션 리스너 추가하기
+	class PadActionListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+		
+	}
+	
+	
+	//계산 기능
+	public double calculate(String inputText) {
+		fullTextParsing(inputText);
+		
+		double prev = 0;
+		double current = 0;
+		
+		String mode = ""; //연산 기호 처리 변수
+		
+		
+		return 0;
+		
+	}
+	
+	
+	
+	private void fullTextParsing(String inputText) {
+		
+		
+	}
+
+
+
 	public static void main(String[] args) {
 		new Calculator();
 		
