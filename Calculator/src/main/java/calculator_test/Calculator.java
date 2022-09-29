@@ -42,6 +42,7 @@ public class Calculator extends JFrame {
 		//버튼 위치, 크기 지정
 		buttonPanel.setBounds(8, 90, 270, 235);
 		
+		
 		//버튼 내용 배열에 저장
 		String button_names[] = { "C", "√", "%", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "0", "00", ".", "=" };
 		
@@ -67,7 +68,11 @@ public class Calculator extends JFrame {
 			
 			buttons[i].setBorderPainted(false); //테두리 없애기
 			
+			//밑에서 만든 액션리스너를 버튼에 추가
+			buttons[i].addActionListener(new PadActionListener());
 			
+			//버튼들을 버튼패널에 추가
+			buttonPanel.add(buttons[i]);
 			
 		}
 		
@@ -85,12 +90,65 @@ public class Calculator extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //창 종료 시 프로그램도 종료
 	}
 	
-	abstract //버튼에 액션 리스너 추가하기
-	class PadActionListener implements ActionListener{
+	
+	//버튼에 액션 리스너 추가하기
+	class PadActionListener implements ActionListener { 
+	
 		public void actionPerformed(ActionEvent e) {
+			
+			//어떤 버튼이 눌렸는지를 알아냄
+			String operation = e.getActionCommand();
+			
+			//C가 눌렸을 경우 위의 계산식 내용을 지워줌
+			if (operation.equals("C")) {
+				inputSpace.setText("");
+				
+			//=이 눌렸을 경우 위에 입력된 식을 계산, 계산값이 나오도록 함
+			} else if (operation.equals("=")) {
+				
+				//밑의 메소드들을 이용하여 계산, 계산식 화면에 값을 띄워줌
+				String result = Double.toString(calculate(inputSpace.getText()));
+				inputSpace.setText("" + result);
+				num = "";
+				
+			//나버지 버튼은 눌렀을 때 계산식에 추가됨
+			} else {
+				inputSpace.setText(inputSpace.getText() + e.getActionCommand());
+			}
 			
 		}
 		
+	}
+	
+	private void fullTextParsing(String inputText) {
+		
+		equation.clear();
+		
+		//계산식의 글자를 하나하나 거쳐감
+		for (int i = 0; i < inputText.length(); i++) {
+			char ch = inputText.charAt(i);
+			
+			//연산기호가 나오면 ArrayList에 추가되고 초기화
+			if (ch == '-' || ch == '+' || ch == '×' || ch == '÷') {
+				
+				//연산기호를 만났다 : 앞은 숫자라는 것을 의미
+				//숫자를 ArrayList에 추가
+				equation.add(num);
+				
+				//num 초기화
+				num = "";
+				
+				//연산기호를 ArrayList에 추가
+				equation.add(ch + "");
+			} else {
+				
+				//나머지는 그냥 숫자 처리
+				num = num + ch;
+			}
+		}
+		
+		//반복문 끝나고 남아있는 숫자값 추가
+		equation.add(num);
 	}
 	
 	
@@ -144,14 +202,6 @@ public class Calculator extends JFrame {
 	}
 	
 	
-	
-	private void fullTextParsing(String inputText) {
-		
-		
-	}
-
-
-
 	public static void main(String[] args) {
 		new Calculator();
 		
