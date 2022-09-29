@@ -104,7 +104,42 @@ public class Calculator extends JFrame {
 		String mode = ""; //연산 기호 처리 변수
 		
 		
-		return 0;
+		//+일경우 add, -일경우 sub, x일경우 mul, /일경우 div
+		for (String s : equation) {
+			if (s.equals("+")) {
+				mode = "add";
+			} else if (s.equals("×")) {
+				mode = "sub";
+			}  
+			else if (s.equals("×")) {
+				mode = "mul";
+			}  
+			else if (s.equals("÷")) {
+				mode = "div";
+			}  else {
+			
+				//숫자일 때 문자열을 Double로 형변환
+				current = Double.parseDouble(s);
+				
+				//mode값에 따라 처리, prev는 계산값 계속 갱신
+				if (mode.equals("add")) {
+					prev += current;
+				} else if (mode.equals("sub")) {
+					prev -= current;
+				} 
+				else if (mode.equals("mul")) {
+					prev *= current;
+				} 
+				else if (mode.equals("div")) {
+					prev /= current;
+				} else {
+					prev = current;
+				}
+				
+			}
+		}
+				//계산값 prev 반환	
+				return prev;
 		
 	}
 	
